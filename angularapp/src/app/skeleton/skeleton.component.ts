@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WordsService } from '../services/words/words.service';
+import { WordsService } from '../services/words.service';
 
 @Component({
   selector: 'app-skeleton',

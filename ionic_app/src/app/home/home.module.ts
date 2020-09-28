@@ -6,13 +6,16 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
+import { SkeletonComponent } from '../skeleton/skeleton.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    SkeletonComponent
   ],
   declarations: [HomePage]
 })
