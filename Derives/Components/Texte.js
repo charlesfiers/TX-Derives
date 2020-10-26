@@ -19,12 +19,10 @@ class Texte extends React.Component{
 
   _startLoop(){
     var i = 0
-    console.log("OK1")
     timer = setInterval(()=>{
       if (i >= test.length) {
         i=0
       } else {
-        console.log("OK3")
         this.setState({vers: test[i]})
         i++
       }
@@ -33,15 +31,22 @@ class Texte extends React.Component{
 
   _stopLoop(){
     this.setState({endTimer: "true"})
-    console.log(this.state.endTimer)
   }
 
   _displayText(){
+    if (this.state.endTimer == "false") {
       return(
         <Text style={styles.textOver}>
           {this.state.vers}
         </Text>
       )
+    }else{
+      return(
+        <Text style={styles.textOver}>
+          STOPPED
+        </Text>
+      )
+    }
   }
 
   render(){
