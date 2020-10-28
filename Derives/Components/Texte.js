@@ -8,9 +8,11 @@ class Texte extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      vers: "WAITING",
+      vers: "",
       endTimer: "false"
     }
+    this.timer = ""
+    this.index = 0
   }
 
   componentDidMount() {
@@ -18,19 +20,20 @@ class Texte extends React.Component{
   }
 
   _startLoop(){
-    var i = 0
-    timer = setInterval(()=>{
-      if (i >= test.length) {
-        i=0
+    this.setState({endTimer: "false"})
+    this.timer = setInterval(()=>{
+      if (this.index >= test.length) {
+        this.index=0
       } else {
-        this.setState({vers: test[i]})
-        i++
+        this.setState({vers: test[this.index]})
+        this.index++
       }
     }, 5000)
   }
 
   _stopLoop(){
     this.setState({endTimer: "true"})
+    clearInterval(this.timer)
   }
 
   _displayText(){
@@ -58,7 +61,10 @@ class Texte extends React.Component{
         <View style={styles.textContainer}>
           {this._displayText()}
         </View>
-        <Button title="STOP" onPress={() => this._stopLoop()}/>
+        <View style={styles.buttonContainer}>
+          <Button title="STOP" onPress={() => this._stopLoop()}/>
+          <Button title="START" onPress={() => this._startLoop()}/>
+        </View>
       </View>
     )
   }
@@ -66,16 +72,21 @@ class Texte extends React.Component{
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
+    flex: 10,
     justifyContent: 'center',
   },
   cameraContener:{
-    flex: 1
+    flex: 9
   },
   textContainer: {
     flex: 1,
     position: 'absolute',
     alignSelf: 'center'
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   textOver: {
     fontSize: 40,
