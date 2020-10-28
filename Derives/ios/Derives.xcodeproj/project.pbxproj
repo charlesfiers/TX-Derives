@@ -19,6 +19,7 @@
 		3B134AA8A2D1FDB762FD54CF /* libPods-Derives.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8FD38134CF2CA22EA8850E8 /* libPods-Derives.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B7AB3E5D7A2632A1A116AC05 /* libPods-Derives-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70B50E6A8CA6ADE12ACC26BB /* libPods-Derives-tvOSTests.a */; };
+		BBEDC523254A121A00A97C8D /* son_test2.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBEDC522254A121A00A97C8D /* son_test2.wav */; };
 		E31FC0300007D80ECE165A2B /* libPods-Derives-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF30B32AB7D7BA3FD7052F61 /* libPods-Derives-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		8B9C210559F70886E1426C24 /* Pods-Derives-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Derives-tvOS/Pods-Derives-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		AA37D3B1C9656ED7A707DF69 /* Pods-Derives-DerivesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives-DerivesTests.release.xcconfig"; path = "Target Support Files/Pods-Derives-DerivesTests/Pods-Derives-DerivesTests.release.xcconfig"; sourceTree = "<group>"; };
 		B3E1050AA666AB17FEB7EB78 /* Pods-Derives-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Derives-tvOSTests/Pods-Derives-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		BBEDC522254A121A00A97C8D /* son_test2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = son_test2.wav; sourceTree = "<group>"; };
 		CCACEC04E6BA7B008EF69A98 /* Pods-Derives.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives.debug.xcconfig"; path = "Target Support Files/Pods-Derives/Pods-Derives.debug.xcconfig"; sourceTree = "<group>"; };
 		D8FD38134CF2CA22EA8850E8 /* libPods-Derives.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Derives.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC098105ECDBFFFABB791C21 /* libPods-Derives-DerivesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Derives-DerivesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BBEDC522254A121A00A97C8D /* son_test2.wav */,
 				13B07FAE1A68108700A75B9A /* Derives */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* DerivesTests */,
@@ -330,8 +333,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* Derives */,
@@ -341,16 +342,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		BBB52AA6253B4F6100CD8722 /* libRNGestureHandler-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libRNGestureHandler-tvOS.a";
-			remoteRef = BBB52AA5253B4F6100CD8722 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -365,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				BBEDC523254A121A00A97C8D /* son_test2.wav in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,6 +632,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DerivesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -651,9 +644,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Derives.app/Derives";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Debug;
 		};
@@ -663,6 +653,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DerivesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -674,9 +665,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Derives.app/Derives";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Release;
 		};
@@ -689,6 +677,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HD594666KA;
 				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Derives/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -701,9 +690,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Debug;
 		};
@@ -715,6 +701,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HD594666KA;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Derives/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -726,9 +713,6 @@
 				PRODUCT_NAME = Derives;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Release;
 		};
@@ -746,6 +730,7 @@
 				DEVELOPMENT_TEAM = HD594666KA;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Derives-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -758,9 +743,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Debug;
 		};
@@ -778,6 +760,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = HD594666KA;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Derives-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -790,9 +773,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Release;
 		};
@@ -808,6 +788,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Derives-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -820,9 +801,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Derives-tvOS.app/Derives-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Debug;
 		};
@@ -838,6 +816,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Derives-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -850,9 +829,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Derives-tvOS.app/Derives-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-				);
 			};
 			name = Release;
 		};

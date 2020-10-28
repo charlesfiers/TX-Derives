@@ -1,5 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Button, Text, TouchableOpacity } from 'react-native'
+import Sound from 'react-native-sound';
+
 import test from '../Helpers/Test1'
 import Camera from './Camera'
 
@@ -13,6 +15,23 @@ class Texte extends React.Component{
     }
     this.timer = ""
     this.index = 0
+    Sound.setCategory('Playback')
+    this.sound1 = new Sound('son_test2.wav', Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error)
+        return
+      } else {
+        this.sound1.setNumberOfLoops(-1)
+        this.sound1.play((success) => {
+          if (success) {
+            console.log('successfully finished playing');
+            this.sound1.release()
+          } else {
+            console.log('playback failed due to audio decoding errors');
+          }
+        })
+      }
+    })
   }
 
   componentDidMount() {

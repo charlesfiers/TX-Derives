@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../Musics/son_test2.wav">
+   </FileRef>
+   <FileRef
       location = "group:Derives.xcodeproj">
    </FileRef>
    <FileRef
