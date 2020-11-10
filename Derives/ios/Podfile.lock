@@ -314,6 +314,8 @@ PODS:
     - React
   - RNScreens (2.11.0):
     - React
+  - RNSensors (7.0.1):
+    - React
   - RNSound (0.11.0):
     - React
     - RNSound/Core (= 0.11.0)
@@ -376,6 +378,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSensors (from `../node_modules/react-native-sensors`)
   - RNSound (from `../node_modules/react-native-sound`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -457,6 +460,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSensors:
+    :path: "../node_modules/react-native-sensors"
   RNSound:
     :path: "../node_modules/react-native-sound"
   Yoga:
@@ -505,10 +510,11 @@ SPEC CHECKSUMS:
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
+  RNSensors: 07c37847fc643356e7f9829800932f7d7c33455a
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: df8a373705ce8ea15b0a413f5425a7f013819ed2
+PODFILE CHECKSUM: 1b229b8f124613ebfab91535a9902a6be1107b41
 
 COCOAPODS: 1.9.3

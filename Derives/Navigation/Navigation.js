@@ -5,9 +5,10 @@ import { createAppContainer } from 'react-navigation'
 
 import Accueil from '../Components/Accueil'
 import Texte from '../Components/Texte'
+import Captors from '../Components/Captors'
 
 const StackNavigator = createStackNavigator({
-  Search: {
+  Accueil: {
     screen: Accueil,
     navigationOptions: {
       title: 'Accueil'
@@ -18,6 +19,12 @@ const StackNavigator = createStackNavigator({
     navigationOptions: {
       title: null
       //headerShown: false
+    }
+  },
+  Captors: {
+    screen: Captors,
+    navigationOptions: {
+      title: 'Capteurs'
     }
   }
 })
