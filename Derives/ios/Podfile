@@ -10,6 +10,8 @@ target 'Derives' do
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
+  pod 'RNSensors', :path => '../node_modules/react-native-sensors'
+
   target 'DerivesTests' do
     inherit! :complete
     # Pods for testing
