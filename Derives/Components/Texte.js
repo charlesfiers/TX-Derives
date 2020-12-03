@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Button, Text, TouchableOpacity } from 'react-native'
-import Sound from 'react-native-sound';
+import Sound from 'react-native-sound'
 
 import test from '../Helpers/Test1'
 import Camera from './Camera'
