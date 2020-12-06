@@ -3,6 +3,7 @@ import { StyleSheet, View, Image, Text } from "react-native"
 
 import { accelerometer, setUpdateIntervalForType, gyroscope, SensorTypes } from "react-native-sensors"
 import Geolocation from '@react-native-community/geolocation'
+import ActivityRecognition from 'react-native-activity-recognition'
 
 import { getLocWithLatLonGouv } from '../API/GeolocAPI'
 import { getWeatherWithCity, getWeatherWitLatLon } from '../API/WeatherAPI'
@@ -18,7 +19,7 @@ class Captors extends React.Component {
     this.lon = 0
 
     this.state = {
-      speed: 0,
+      speed: "",
       city: "",
       nbInhabs: 0,
       popDensity: 0,
@@ -43,6 +44,16 @@ class Captors extends React.Component {
     this.watchGeo = Geolocation.watchPosition(position => {
       this._geolocAPI(position)
     }, error => console.log(error), { distanceFilter: 500, maximumAge: 3000 })
+
+    this.watchActivity = ActivityRecognition.subscribe(detectedActivities => {
+      const mostProbableActivity = detectedActivities.sorted[0].type
+      //const mostProbableActivity = detectedActivities
+      if (mostProbableActivity != this.state.speed && mostProbableActivity != "UNKNOWN") {
+        this.setState({ speed : mostProbableActivity })
+      }
+    })
+    const detectionIntervalMillis = 1000
+    ActivityRecognition.start(detectionIntervalMillis)
   }
 
   _geolocAPI(position){
@@ -69,6 +80,8 @@ class Captors extends React.Component {
 
   componentWillUnmount() {
     this.state.subscription.unsubscribe()
+    ActivityRecognition.stop()
+    this.watchActivity()
   }
 
   _displaySpeed(){

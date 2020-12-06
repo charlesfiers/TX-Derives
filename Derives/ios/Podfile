@@ -16,6 +16,8 @@ target 'Derives' do
 
   pod 'react-native-geolocation-service', :path => '../node_modules/react-native-geolocation-service'
 
+  pod 'RNActivityRecognition', :path => '../node_modules/react-native-activity-recognition'
+
   target 'DerivesTests' do
     inherit! :complete
     # Pods for testing
