@@ -39,12 +39,14 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Autoriser l'utilisation de la Camera ?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Autoriser l'accès aux photos ?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Autoriser l'accès aux photos ?</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<key>NSMotionUsageDescription</key>
+	<string>Autoriser l'accès aux mouvements ?</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

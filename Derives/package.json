@@ -16,6 +16,7 @@
     "mathjs": "^8.0.1",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-activity-recognition": "^3.2.0",
     "react-native-camera": "^3.40.0",
     "react-native-geolocation-service": "^5.0.0",
     "react-native-gesture-handler": "^1.8.0",
