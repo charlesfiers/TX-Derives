@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { StyleSheet, View, Image, Text } from "react-native"
+import { round } from "mathjs"
 
 import { accelerometer, setUpdateIntervalForType, gyroscope, SensorTypes } from "react-native-sensors"
 import Geolocation from '@react-native-community/geolocation'
@@ -21,7 +22,6 @@ class Captors extends React.Component {
     this.state = {
       speed: "",
       city: "",
-      nbInhabs: 0,
       popDensity: 0,
       weatherDescription: "",
       temperature: 0
@@ -30,19 +30,17 @@ class Captors extends React.Component {
 
   componentDidMount() {
     setUpdateIntervalForType(SensorTypes.gyroscope, 10)
-
-    const subscription = gyroscope.subscribe(({ x, y, z }) => {
+    this.subscription = gyroscope.subscribe(({ x, y, z }) => {
       this.gyro += (x + y + z)
     })
-
     this.setState({ subscription })
 
     this.watchGeo = Geolocation.getCurrentPosition(position => {
-      this._geolocAPI(position)
+      this._getLocationInfo(position)
     }, error => console.log(error))
 
     this.watchGeo = Geolocation.watchPosition(position => {
-      this._geolocAPI(position)
+      this._getLocationInfo(position)
     }, error => console.log(error), { distanceFilter: 500, maximumAge: 3000 })
 
     this.watchActivity = ActivityRecognition.subscribe(detectedActivities => {
@@ -56,11 +54,11 @@ class Captors extends React.Component {
     ActivityRecognition.start(detectionIntervalMillis)
   }
 
-  _geolocAPI(position){
+  _getLocationInfo(position){
     getLocWithLatLonGouv(position.coords.latitude, position.coords.longitude).then(data =>{
       var density = data[0].population * 100 / data[0].surface
       if (data[0].nom != this.state.city) {
-        this.setState({city: data[0].nom, nbInhabs: data[0].population, popDensity: density})
+        this.setState({city: data[0].nom, popDensity: density})
         this.lat = position.coords.latitude
         this.lon = position.coords.longitude
         this._getWeather()
@@ -86,32 +84,31 @@ class Captors extends React.Component {
 
   _displaySpeed(){
     return(
-      <Text> SPEED : {this.state.speed}  </Text>
+      <Text style={styles.textCaptors}> SPEED : {this.state.speed}  </Text>
     )
   }
 
   _displayGeoloc(){
     return(
       <View>
-        <Text> City : {this.state.city}  </Text>
-        <Text> Number of Inhabitants : {this.state.nbInhabs}  </Text>
-        <Text> Population Density : {this.state.popDensity}  </Text>
+        <Text style={styles.textCaptors}> City : {this.state.city}  </Text>
+        <Text style={styles.textCaptors}> Pop Density : {round(this.state.popDensity)}  </Text>
       </View>
     )
   }
 
   _displayWeather(){
     return(
-      <View>
-        <Text> Weather : {this.state.weatherDescription}  </Text>
-        <Text> Temperature : {this.state.temperature}°C</Text>
+      <View style={styles.textCaptors}>
+        <Text style={styles.textCaptors}> Weather : {this.state.weatherDescription}  </Text>
+        <Text style={styles.textCaptors}> Temperature : {this.state.temperature}°C</Text>
       </View>
     )
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerCaptors}>
         {this._displaySpeed()}
         {this._displayGeoloc()}
         {this._displayWeather()}
@@ -121,11 +118,17 @@ class Captors extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerCaptors: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    position: 'absolute',
+    bottom: '0%'
+  },
+  textCaptors: {
+    fontSize: 12,
+    textAlign: 'center',
+    color: 'white',
+    textShadowColor: 'black',
+    textShadowRadius: 10
   }
 });
 
