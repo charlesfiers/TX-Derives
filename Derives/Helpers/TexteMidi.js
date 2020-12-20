@@ -1,0 +1,25 @@
+export default derive_midi = [
+    "Autre moment",
+    "La chaussée mal fermée répand ses histoires",
+    "comme des odeurs",
+    "de pain, d’oranges et de dahlias",
+    "\n",
+    "De pas en pas",
+    "Tout ce qui bouge au bord de toi",
+    "Tout ce qui te rencontre",
+    "\n",
+    "Le jour t’apprend, vendange tes traces",
+    "et fredonne tes visages",
+    "\n",
+    "Le souvenir",
+    "dans la grossesse de l’automne",
+    "s’éteint",
+    "La mère s’apaise",
+    "Les pins sèchent",
+    "Les champs reposent",
+    "\n",
+    "Ton corps s’augmente à taille de pays",
+    "Tu es là",
+    "où s’abritent les mondes"
+  
+  ]

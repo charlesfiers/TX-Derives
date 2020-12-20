@@ -19,12 +19,17 @@ class Captors extends React.Component {
     this.lat = 0
     this.lon = 0
 
+    this.date = ""
+    this.saison=""
+
     this.state = {
       speed: "",
       city: "",
       popDensity: 0,
+      milieu:"",
       weatherDescription: "",
-      temperature: 0
+      temperature: 0,
+      temps:""
     }
   }
 
@@ -57,6 +62,8 @@ class Captors extends React.Component {
   _getLocationInfo(position){
     getLocWithLatLonGouv(position.coords.latitude, position.coords.longitude).then(data =>{
       var density = data[0].population * 100 / data[0].surface
+      if (density>=376) this.state.milieu="urbain";
+      else this.state.milieu="rural";
       if (data[0].nom != this.state.city) {
         this.setState({city: data[0].nom, popDensity: density})
         this.lat = position.coords.latitude
@@ -80,6 +87,70 @@ class Captors extends React.Component {
     this.state.subscription.unsubscribe()
     ActivityRecognition.stop()
     this.watchActivity()
+  }
+
+  _getTimeData(){
+    var d = new Date();
+    this.date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    console.log(this.date);
+    var mois=d.getMonth()+1;
+    var heure=d.getHours();
+
+    if (mois>=3 && mois<6) this.saison="printemps";
+    else if (mois>=6 && mois<9) this.saison="été";
+    else if (mois>=9 && mois<12) this.saison="automne";
+    else this.saison="hiver";
+
+    var temps;
+
+    switch(this.saison) {
+      case "printemps": {
+        if (heure<=6 && heure>20) temps="nuit"; // possible faire un switch ?
+        else if (heure>6 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=17) temps="midi"; // réequilibrer les horaires si besoin pour avoir meilleure repartition entre les 4 textes
+        else temps="soir";
+        break;}
+
+      case "été":{
+        if (heure<=5 && heure>22) temps="nuit"; 
+        else if (heure>5 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=18) temps="midi"; 
+        else temps="soir";
+        break;}
+
+      case "automne":{
+        if (heure<=6 && heure>20) temps="nuit"; 
+        else if (heure>6 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=17) temps="midi"; 
+        else temps="soir";
+        break;}
+        
+      case "hiver":{
+        if (heure<=7 && heure>19) temps="nuit"; 
+        else if (heure>7 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=17) temps="midi"; 
+        else temps="soir";
+        break;}
+
+      default:{
+        if (heure<=5 && heure>21) temps="nuit"; 
+        else if (heure>5 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=18) temps="midi"; 
+        else temps="soir";
+        break;}
+    }
+    this.state.temps=temps;
+  }
+
+  _displayTime(){
+    this._getTimeData();
+    return (
+      <View>
+        <Text style={styles.textCaptors}> Date : {this.date}  </Text>
+        <Text style={styles.textCaptors}> Saison : {this.saison}  </Text>
+        <Text style={styles.textCaptors}> Temps : {this.state.temps}  </Text>
+      </View>
+    )
   }
 
   _displaySpeed(){
@@ -109,6 +180,7 @@ class Captors extends React.Component {
   render() {
     return (
       <View style={styles.containerCaptors}>
+        {this._displayTime()}
         {this._displaySpeed()}
         {this._displayGeoloc()}
         {this._displayWeather()}
