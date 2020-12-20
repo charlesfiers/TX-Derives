@@ -12,6 +12,8 @@ import { getLocWithLatLonGouv } from '../API/GeolocAPI'
 import { getWeatherWithCity, getWeatherWitLatLon } from '../API/WeatherAPI'
 
 import test from '../Helpers/Test1'
+import texteMatin from '../Helpers/TexteMatin'
+import texteMidi from '../Helpers/TexteMidi'
 import Camera from './Camera'
 
 class Texte extends React.Component{
@@ -21,6 +23,9 @@ class Texte extends React.Component{
 
     this.lat = 0
     this.lon = 0
+
+    this.date = ""
+    this.saison=""
 
     this.timer = ""
     this.index = 0
@@ -33,9 +38,11 @@ class Texte extends React.Component{
       speed: "",
       city: "",
       popDensity: 0,
+      milieu:"",
       weatherDescription: "",
       temperature: 0,
       gyro: 0,
+      temps:"",
       coefPolice: 1,
       coefTextSpeed: 5,
       nbLines: 4
@@ -140,14 +147,24 @@ class Texte extends React.Component{
   }
 
   _startTimer(){
+    var text;
+    switch(this.state.temps){
+      case "matin":text=texteMatin; break
+      case "midi":text=texteMidi; break
+      case "soir":text=texteMatin; break
+      case "nuit":text=test; break
+      default:console.log("le temps de la journée ne peut être déterminé")
+    }
+    
+
     if (this.timerPaused == "true") {
       this.timerPaused = "false"
 
       this.timer = setInterval(()=>{
-        if (this.index >= test.length) {
+        if (this.index >= text.length) {
           this.index=0
         } else {
-          this.setState({vers: test[this.index]})
+          this.setState({vers: text[this.index]})
           this.index++
         }
       }, this.state.coefTextSpeed * 1000)
@@ -167,6 +184,8 @@ class Texte extends React.Component{
   _getLocationInfo(position){
     getLocWithLatLonGouv(position.coords.latitude, position.coords.longitude).then(data =>{
       var density = data[0].population * 100 / data[0].surface
+      if (density>=376) this.state.milieu="urbain";
+      else this.state.milieu="rural";
       if (data[0].nom != this.state.city) {
         this.setState({city: data[0].nom, popDensity: density})
         this.lat = position.coords.latitude
@@ -261,7 +280,7 @@ class Texte extends React.Component{
     return(
       <View>
         <Text style={styles.textCaptors}> City : {this.state.city}  </Text>
-        <Text style={styles.textCaptors}> Pop Density : {round(this.state.popDensity)}  </Text>
+        <Text style={styles.textCaptors}> Pop Density : {round(this.state.popDensity)}  Milieu : {this.state.milieu} </Text>
       </View>
     )
   }
@@ -282,6 +301,69 @@ class Texte extends React.Component{
     this.sound1.stop()
   }
 
+  _getTimeData(){
+    var d = new Date();
+    this.date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+    console.log(this.date);
+    var mois=d.getMonth()+1;
+    var heure=d.getHours();
+
+    if (mois>=3 && mois<6) this.saison="printemps";
+    else if (mois>=6 && mois<9) this.saison="été";
+    else if (mois>=9 && mois<12) this.saison="automne";
+    else this.saison="hiver";
+
+    var temps;
+
+    switch(this.saison) {
+      case "printemps": {
+        if (heure<=6 && heure>20) temps="nuit"; // possible faire un switch ?
+        else if (heure>6 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=17) temps="midi"; // réequilibrer les horaires si besoin pour avoir meilleure repartition entre les 4 textes
+        else temps="soir";
+        break;}
+
+      case "été":{
+        if (heure<=5 && heure>22) temps="nuit"; 
+        else if (heure>5 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=18) temps="midi"; 
+        else temps="soir";
+        break;}
+
+      case "automne":{
+        if (heure<=6 && heure>20) temps="nuit"; 
+        else if (heure>6 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=17) temps="midi"; 
+        else temps="soir";
+        break;}
+        
+      case "hiver":{
+        if (heure<=7 && heure>19) temps="nuit"; 
+        else if (heure>7 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=17) temps="midi"; 
+        else temps="soir";
+        break;}
+
+      default:{
+        if (heure<=5 && heure>21) temps="nuit"; 
+        else if (heure>5 && heure<=10) temps="matin";
+        else if (heure>10 && heure<=18) temps="midi"; 
+        else temps="soir";
+        break;}
+    }
+    this.state.temps=temps;
+  }
+
+  _displayTime(){
+    this._getTimeData();
+    return (
+      <View>
+        <Text style={styles.textCaptors}> Saison : {this.saison}  </Text>
+        <Text style={styles.textCaptors}> Temps : {this.state.temps}  </Text>
+      </View>
+    )
+  }
+
   render(){
     return(
       <View style={styles.mainContainer}>
@@ -292,6 +374,7 @@ class Texte extends React.Component{
           {this._displayText()}
         </View>
         <View style={styles.containerCaptors}>
+          {this._displayTime()}
           {this._displaySpeed()}
           {this._displayGeoloc()}
           {this._displayWeather()}
