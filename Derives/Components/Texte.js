@@ -50,24 +50,21 @@ class Texte extends React.Component{
 
 
     Sound.setCategory('Playback')
-    this.sound1 = new Sound('son_test2.wav', Sound.MAIN_BUNDLE, (error) => {
+    const callback = (error, sound) => {
       if (error) {
-        console.log('failed to load the sound', error)
-        return
-      } else {
-        this.sound1.setNumberOfLoops(-1)
-        this.sound1.play((success) => {
-          if (success) {
-            console.log('successfully finished playing');
-            this.sound1.release()
-          } else {
-            console.log('playback failed due to audio decoding errors');
-          }
-        })
+        console.log('error', error.message);
+        return;
       }
-    })
+      this.musicPaused = "false"
+      sound.play(() => {
+        sound.release();
+      });
+    };
+    this.sound1 = new Sound('Matin_Mix_02.mp3', error => callback(error, sound));
 
     setUpdateIntervalForType(SensorTypes.gyroscope, 500)
+    this.detectionIntervalMillis = 1000
+
     this.watchGyro = gyroscope.subscribe(({ x, y, z }) => {
       this.setState({ gyro: (abs(x) + abs(y) + abs(z)) * 10 })
     })
@@ -78,16 +75,17 @@ class Texte extends React.Component{
 
     this.watchActivity = ActivityRecognition.subscribe(detectedActivities => {
       const mostProbableActivity = detectedActivities.sorted[0].type
-      //const mostProbableActivity = detectedActivities
-      if (mostProbableActivity != this.state.speed && mostProbableActivity != "UNKNOWN") {
+      const activityConfidence = detectedActivities.sorted[0].confidence
+      console.log(detectedActivities)
+      if (mostProbableActivity != this.state.speed && mostProbableActivity != "UNKNOWN" && activityConfidence > 0) {
         this.setState({ speed : mostProbableActivity })
         switch (mostProbableActivity) {
           case "STILL":
           case "STATIONARY":
           case "TILTING":
+            this.setState({ coefPolice: 1, nbLines: 4 })
             this._stopMusic()
             this._stopTimer()
-            this.setState({ coefPolice: 1, nbLines: 4 })
             break
           case "WALKING":
           case "ON_FOOT":
@@ -118,7 +116,6 @@ class Texte extends React.Component{
         }
       }
     })
-    this.detectionIntervalMillis = 2000
   }
 
   componentDidMount() {
@@ -380,8 +377,8 @@ class Texte extends React.Component{
           {this._displayWeather()}
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="STOP" onPress={() => this._stopLoop()}/>
-          <Button title="START" onPress={() => this._startLoop()}/>
+          <Button title="STOP" onPress={() => {this._stopTimer(); this._stopMusic()}}/>
+          <Button title="START" onPress={() => {this._startTimer(); this._startMusic()}}/>
         </View>
       </View>
     )
