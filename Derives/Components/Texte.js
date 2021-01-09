@@ -11,7 +11,7 @@ import ActivityRecognition from 'react-native-activity-recognition'
 import { getLocWithLatLonGouv } from '../API/GeolocAPI'
 import { getWeatherWithCity, getWeatherWitLatLon } from '../API/WeatherAPI'
 
-import test from '../Helpers/Test1'
+import base_de_mots from '../Helpers/WordBase'
 import texteMatin from '../Helpers/TexteMatin'
 import texteMidi from '../Helpers/TexteMidi'
 import Camera from './Camera'
@@ -34,7 +34,7 @@ class Texte extends React.Component{
     this.timerPaused = "true"
 
     this.state = {
-      vers: "Commencez à marcher !",
+      vers: ["Commencez à marcher !"],
       speed: "",
       city: "",
       popDensity: 0,
@@ -50,17 +50,13 @@ class Texte extends React.Component{
 
 
     Sound.setCategory('Playback')
-    const callback = (error, sound) => {
+    this.sound1 = new Sound(require('../Musics/Matin_Mix_02.mp3'),
+    (error, sound) => {
       if (error) {
-        console.log('error', error.message);
+        alert('error' + error.message);
         return;
       }
-      this.musicPaused = "false"
-      sound.play(() => {
-        sound.release();
-      });
-    };
-    this.sound1 = new Sound('Matin_Mix_02.mp3', error => callback(error, sound));
+    })
 
     setUpdateIntervalForType(SensorTypes.gyroscope, 500)
     this.detectionIntervalMillis = 1000
@@ -128,6 +124,14 @@ class Texte extends React.Component{
     ActivityRecognition.start(this.detectionIntervalMillis)
   }
 
+  _interpret(sentence){
+    i=0
+    //while (sentence.charAt(i) != null) {
+
+    //}
+    return sentence
+  }
+
   _startMusic(){
     if (this.musicPaused == "true") {
       this.musicPaused = "false"
@@ -147,12 +151,12 @@ class Texte extends React.Component{
     var text;
     switch(this.state.temps){
       case "matin":text=texteMatin; break
-      case "midi":text=texteMidi; break
+      case "midi":text=texteMatin; break
       case "soir":text=texteMatin; break
       case "nuit":text=test; break
       default:console.log("le temps de la journée ne peut être déterminé")
     }
-    
+
 
     if (this.timerPaused == "true") {
       this.timerPaused = "false"
@@ -161,8 +165,11 @@ class Texte extends React.Component{
         if (this.index >= text.length) {
           this.index=0
         } else {
-          this.setState({vers: text[this.index]})
-          this.index++
+          this.setState({vers: ""})
+          for (var i = 0; i < this.state.nbLines; i++) {
+            this.setState({vers: this.state.vers+"\n"+text[this.index]})
+            this.index++
+          }
         }
       }, this.state.coefTextSpeed * 1000)
     }
@@ -203,66 +210,15 @@ class Texte extends React.Component{
   }
 
   _displayText(){
-    switch (this.state.nbLines) {
-      case 4:
-        return(
-          <View>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-          </View>
-        )
-        break
-      case 3:
-        return(
-          <View>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-            <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-              {this.state.vers}
-            </Text>
-          </View>
-          )
-          break
-        case 2:
-          return(
-            <View>
-              <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-                {this.state.vers}
-              </Text>
-              <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-                {this.state.vers}
-              </Text>
-            </View>
-            )
-            break
-          case 1:
-            return(
-              <View>
-                <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
-                  {this.state.vers}
-                </Text>
-              </View>
-              )
-              break
-      default:
-        console.log("erreur nb vers affichés")
+    return(
+      <View>
+        <Text style={[styles.textOver, {fontSize: 20*this.state.coefPolice}]}>
+          {this.state.vers}
+        </Text>
+      </View>
+      )
+      console.log("erreur nb vers affichés")
     }
-
-  }
 
   _displaySpeed(){
     return(
@@ -295,13 +251,12 @@ class Texte extends React.Component{
     this.watchGyro.unsubscribe()
     ActivityRecognition.stop()
     this.watchActivity()
-    this.sound1.stop()
+    this._stopMusic()
   }
 
   _getTimeData(){
     var d = new Date();
     this.date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
-    console.log(this.date);
     var mois=d.getMonth()+1;
     var heure=d.getHours();
 
@@ -321,30 +276,30 @@ class Texte extends React.Component{
         break;}
 
       case "été":{
-        if (heure<=5 && heure>22) temps="nuit"; 
+        if (heure<=5 && heure>22) temps="nuit";
         else if (heure>5 && heure<=10) temps="matin";
-        else if (heure>10 && heure<=18) temps="midi"; 
+        else if (heure>10 && heure<=18) temps="midi";
         else temps="soir";
         break;}
 
       case "automne":{
-        if (heure<=6 && heure>20) temps="nuit"; 
+        if (heure<=6 && heure>20) temps="nuit";
         else if (heure>6 && heure<=10) temps="matin";
-        else if (heure>10 && heure<=17) temps="midi"; 
+        else if (heure>10 && heure<=17) temps="midi";
         else temps="soir";
         break;}
-        
+
       case "hiver":{
-        if (heure<=7 && heure>19) temps="nuit"; 
+        if (heure<=7 && heure>19) temps="nuit";
         else if (heure>7 && heure<=10) temps="matin";
-        else if (heure>10 && heure<=17) temps="midi"; 
+        else if (heure>10 && heure<=17) temps="midi";
         else temps="soir";
         break;}
 
       default:{
-        if (heure<=5 && heure>21) temps="nuit"; 
+        if (heure<=5 && heure>21) temps="nuit";
         else if (heure>5 && heure<=10) temps="matin";
-        else if (heure>10 && heure<=18) temps="midi"; 
+        else if (heure>10 && heure<=18) temps="midi";
         else temps="soir";
         break;}
     }
