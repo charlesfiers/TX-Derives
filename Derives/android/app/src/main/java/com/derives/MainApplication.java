@@ -2,18 +2,14 @@ package com.derives;
 
 import android.app.Application;
 import android.content.Context;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.xebia.activityrecognition.RNActivityRecognitionPackage;
-import com.xebia.activityrecognition.RNActivityRecognitionPackage;
-import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
-import com.reactnativecommunity.geolocation.GeolocationPackage;
-import com.sensors.RNSensorsPackage;
-import com.zmxv.RNSound.RNSoundPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

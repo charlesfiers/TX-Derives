@@ -1,91 +1,49 @@
 // fonction qui change la dérive
 
 export default derive_matin = [
-    "Partout l’air s'ouvre",
-    "dans tes pas",
-    "Le chemin s’étend",
-    "pousse en deux, en mille",
-    "et plante ses rumeurs d’oiseaux",
-    "\n",
-    "Novembre a ton allure",
-    "\n",
-    "Tu endosses la brise",
-    "Tu endosses la rosée sur la fatigue des pierres",
-    "et le temps battant le long des cimes d’acier",
-    "Partout le monde levant",
     "Partout",
-    "le matin en murmure dans la rousseur des herbes",
-    "\n",
-    "Le sol crépite",
-    "plein du jour",
+    "l’air %V1%AL%",
+    "dans tes pas",
+    "%GN1%GPS% %V2%AL%",
+    "pousse en deux",
+    "en mille",
+    "et plante",
+    "ses %N1%AL% d'oiseaux",
+    "%N2%DATE% a ton allure",
+    "Tu %V3%AL%",
+    "la %N3%TEMP%",
+    "Tu %V3%AL%",
+    "la rosée",
+    "sur %GN2%AL% des %N4%AL%",
+    "et le temps",
+    "%V4%VITESSE%",
+    "le long des cimes %GN3%GPS%",
+    "Partout",
+    "le %N5%AL%",
+    "levant",
+    "Partout",
+    "le matin",
+    "en %N5%AL%",
+    "dans la %N6%AL% des %N7%GPS%",
+    "Le %N8%AL% %V5%VITESSE%",
+    "%A1%AL% du jour",
     "devant",
-    "le jour par les racines qui croît",
-    "Les arbres s’éclairent",
-    "Les ombres tiédissent et se taisent",
-    "\n",
-    "Lentement",
-    "la fraîcheur monte",
-    "s’enfonce dans tes mains",
-    "\n",
-    "Tu marches",
+    "le jour",
+    "par %GN4%AL% ses",
+    "qui %V6%AL%",
+    "Les %N9%GPS% s’éclairent",
+    "Les ombres %V7%AL%",
+    "et se taisent",
+    "%A2%VITESSE%",
+    "la %N10%TEMP%",
+    "%V8%VITESSE%",
+    "%V9%AL%",
+    "dans tes %N11%AL%",
+    "Tu %V10%VITESSE%",
     "Tu viens"
 ]
 
-// %R retour à la ligne optionnel 
-// %V verbe
-// %G groupe nominal
-// %N nom
-// %P participe présent
-// %A adverbe
 
-// on peut fonctionner en recherchant des regexp
-// on incrémente à chaque fois un compteur pour savoir à quel verbe, quel nom on en est => savoir dans quel champ chercher
-
-
-
-derive_matin_2_0 = [
-    "Partout %R l’air %V",
-    "dans tes pas",
-    "%G %V",
-    "pousse en deux,%R en mille",
-    "et plante %R ses %N %G",
-    "\n",
-    "%N a ton allure",
-    "\n",
-    "Tu %V %R la brise",
-    "Tu %V %R la rosée %R sur %G des %N",
-    "et le temps %R %P %R le long des cimes %G",
-    "Partout %R le %N %R levant",
-    "Partout",
-    "le matin %R en %N %R dans la %N des %N",
-    "\n",
-    "Le %N %V",
-    "%A du jour",
-    "devant",
-    "le jour %R par %G ses %R qui %V",
-    "Les %N s’éclairent",
-    "Les ombres %V %R et se taisent",
-    "\n",
-    "%A",
-    "la %N %R %V",
-    "%V %R dans tes %N",
-    "\n",
-    "Tu %V",
-    "Tu viens"
-]
-
-/*
-listes = [
-    V : {
-        campagne : {
-
-        },
-        ville : {
-            
-        }
-    }
-]
-*/
 
 derive_matin2 =[
     {
@@ -104,7 +62,7 @@ derive_matin2 =[
     {
     string : "s’ouvre ",
     variable : true,
-    critère : "aleatoire", 
+    critère : "aleatoire",
     nb_possibilite : 4,
     champ : ["s’ouvre", "tremble", "perce", "éclate"],
     },
@@ -254,7 +212,7 @@ derive_matin2 =[
     {
     string : "des",
     variable : false,
-    }, 
+    },
     {
     string : "pierres ",
     variable : true,
@@ -275,7 +233,7 @@ derive_matin2 =[
     critère : "vitesse2"
     },
     {
-    string : "battant ", 
+    string : "battant ",
     variable : true,
     critère : "vitesse" // à mettre en place
     },
@@ -308,15 +266,15 @@ derive_matin2 =[
     critère : "vitesse1"
     },
     {
-    string : "le ", 
+    string : "le ",
     variable : false
     },
     {
     string : "monde ",
     variable : true,
-    critère : "aleatoire", 
+    critère : "aleatoire",
     nb_possibilite : 3,
-    }, 
+    },
     {
     string : "\n",
     variable : true,
@@ -339,7 +297,7 @@ derive_matin2 =[
     variable : false
     },
     {
-    string : "le matin", 
+    string : "le matin",
     variable : false
     },
     {
@@ -348,34 +306,34 @@ derive_matin2 =[
     critère : "vitesse2"
     },
     {
-    string : "en ", 
+    string : "en ",
     variable : false
     },
     {
     string : "murmure ",
     variable : true,
-    critère : "aleatoire", 
+    critère : "aleatoire",
     nb_possibilite : 2,
-    }, 
+    },
     {
     string : "\n",
     variable : true,
     critère : "vitesse1"
     },
     {
-    string : "dans la ", 
+    string : "dans la ",
     variable : false
     },
     {
     string : "rousseur ",
     variable : true,
-    critère : "aleatoire", 
+    critère : "aleatoire",
     nb_possibilite : 2,
-    }, 
+    },
     {
     string : "des ",
     variable : false
-    }, 
+    },
     {
     string : "herbes ",
     variable : true,
@@ -387,7 +345,7 @@ derive_matin2 =[
     string : "\n\n",
     variable : false
     },
-    "Le", 
+    "Le",
     "sol crépite",
     {
     string : "\n",
@@ -409,28 +367,28 @@ derive_matin2 =[
     variable : true,
     critère : "vitesse1"
     },
-    "par", 
-    "les racines", 
+    "par",
+    "les racines",
     {
     string : "\n",
     variable : true,
     critère : "vitesse2"
     },
-    "qui", 
+    "qui",
     "croît",
     {
     string : "\n",
     variable : false
     },
-    "Les", 
-    "arbres", 
+    "Les",
+    "arbres",
     "s’éclairent",
     {
     string : "\n",
     variable : false
     },
-    "Les ombres", 
-    "tiédissent", 
+    "Les ombres",
+    "tiédissent",
     {
     string : "\n",
     variable : true,
@@ -446,7 +404,7 @@ derive_matin2 =[
     string : "\n",
     variable : false
     },
-    "la", 
+    "la",
     "fraîcheur",
     {
     string : "\n",
@@ -470,9 +428,7 @@ derive_matin2 =[
     string : "\n\n",
     variable : false
     },
-    "Tu", 
+    "Tu",
     "marches",
     "Tu viens"
     ]
-    
-    
