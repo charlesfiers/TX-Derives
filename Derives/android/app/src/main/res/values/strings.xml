@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Derives</string>
+    <string name="appCenterCrashes_whenToSendCrashes">null</string>
 </resources>
