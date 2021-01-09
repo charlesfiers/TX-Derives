@@ -184,11 +184,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.facebook.react:react-native:+'
 
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation project(path: ':@react-native-community_geolocation')
-    implementation project(path: ':@react-native-community_geolocation')
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation project(path: ':@react-native-community_geolocation')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

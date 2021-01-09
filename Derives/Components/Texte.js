@@ -55,6 +55,8 @@ class Texte extends React.Component{
       if (error) {
         alert('error' + error.message);
         return;
+      }else{
+        this.sound1.setNumberOfLoops(-1)
       }
     })
 
@@ -75,6 +77,7 @@ class Texte extends React.Component{
       console.log(detectedActivities)
       if (mostProbableActivity != this.state.speed && mostProbableActivity != "UNKNOWN" && activityConfidence > 0) {
         this.setState({ speed : mostProbableActivity })
+        this._displayText()
         switch (mostProbableActivity) {
           case "STILL":
           case "STATIONARY":
@@ -85,18 +88,18 @@ class Texte extends React.Component{
             break
           case "WALKING":
           case "ON_FOOT":
-            this.setState({ coefTextSpeed: 5, coefPolice: 1.5, nbLines: 3 })
+            this.setState({ coefTextSpeed: 5, coefPolice: 2, nbLines: 3 })
             this._startMusic()
             this._startTimer()
             break
           case "RUNNING":
-            this.setState({ coefTextSpeed: 3, coefPolice: 2, nbLines: 2 })
+            this.setState({ coefTextSpeed: 3, coefPolice: 3, nbLines: 2 })
             this._startMusic()
             this._startTimer()
             break
           case "CYCLING":
           case "ON_BICYCLE":
-            this.setState({ coefTextSpeed: 1, coefPolice: 2.5, nbLines: 1 })
+            this.setState({ coefTextSpeed: 1, coefPolice: 4, nbLines: 1 })
             this._startMusic()
             this._startTimer()
             break
