@@ -17,6 +17,7 @@
     "expo-sensors": "^9.2.0",
     "mathjs": "^8.1.1",
     "node-notifier": "^9.0.0",
+    "path": "^0.12.7",
     "react": "16.13.1",
     "react-native": "^0.63.4",
     "react-native-activity-recognition": "^3.2.0",
@@ -29,7 +30,8 @@
     "react-native-sound": "^0.11.0",
     "react-native-unimodules": "^0.11.0",
     "react-navigation": "^4.4.3",
-    "react-navigation-stack": "^2.10.2"
+    "react-navigation-stack": "^2.10.2",
+    "url-join": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.12.3",

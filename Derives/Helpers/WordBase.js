@@ -1,3 +1,4 @@
+/* === Helpers contenant la base de mots, en format json === */
 export default base_de_mots = {
   V1 : ["s'ouvre", "tremble", "perce", "éclate"],
   GN1 : [{ urbain : "le trottoir" }, { rural : "le chemin" }],

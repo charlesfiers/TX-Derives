@@ -62,7 +62,6 @@
 		8B9C210559F70886E1426C24 /* Pods-Derives-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Derives-tvOS/Pods-Derives-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		AA37D3B1C9656ED7A707DF69 /* Pods-Derives-DerivesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives-DerivesTests.release.xcconfig"; path = "Target Support Files/Pods-Derives-DerivesTests/Pods-Derives-DerivesTests.release.xcconfig"; sourceTree = "<group>"; };
 		B3E1050AA666AB17FEB7EB78 /* Pods-Derives-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Derives-tvOSTests/Pods-Derives-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		BB70BB20256AC1E900484B70 /* libRNPedometer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNPedometer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBEDC522254A121A00A97C8D /* son_test2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = son_test2.wav; sourceTree = "<group>"; };
 		CCACEC04E6BA7B008EF69A98 /* Pods-Derives.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Derives.debug.xcconfig"; path = "Target Support Files/Pods-Derives/Pods-Derives.debug.xcconfig"; sourceTree = "<group>"; };
 		D8FD38134CF2CA22EA8850E8 /* libPods-Derives.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Derives.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,7 +141,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BB70BB20256AC1E900484B70 /* libRNPedometer.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				D8FD38134CF2CA22EA8850E8 /* libPods-Derives.a */,
