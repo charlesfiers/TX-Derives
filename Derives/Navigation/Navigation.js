@@ -17,7 +17,7 @@ const StackNavigator = createStackNavigator({
     screen: Texte,
     navigationOptions: {
       title: null
-      //headerShown: false
+      //headerShown: false (cette option peut être intéressante pour enlever le bandeau supérieure qui masque une partie de l'écran)
     }
   }
 })

@@ -1,3 +1,5 @@
+/* === Component permettant de filmer avec la caméra l'environnement === */
+
 import React from 'react'
 import { StyleSheet, View, Button, Text, TouchableOpacity } from 'react-native'
 import { RNCamera } from 'react-native-camera';

@@ -2,10 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Matin_Mix_02.mp3">
-   </FileRef>
-   <FileRef
-      location = "group:../Musics/son_test2.wav">
+      location = "group:../Musics">
    </FileRef>
    <FileRef
       location = "group:Derives.xcodeproj">
