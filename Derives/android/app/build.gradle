@@ -185,6 +185,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation project(path: ':@react-native-community_geolocation')

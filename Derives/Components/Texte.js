@@ -16,6 +16,22 @@ import TexteMatin from '../Helpers/TexteMatin'
 import TexteMidi from '../Helpers/TexteMidi'
 import Camera from './Camera'
 
+const audioFiles = {
+  matin : [require("../Musics/matin_mus_1.mp3"),
+           require("../Musics/matin_mus_2.mp3"),
+           require("../Musics/matin_mus_3.mp3")],
+  midi : [require("../Musics/midi_mus_1.mp3"),
+          require("../Musics/midi_mus_2.mp3"),
+          require("../Musics/midi_mus_3.mp3")]
+  }
+
+const fonts = {
+  matin : "",
+  midi : "",
+  soir : "",
+  nuit : ""
+}
+
 class Texte extends React.Component{
 
   constructor(props) {
@@ -31,10 +47,10 @@ class Texte extends React.Component{
     this.index = 0
 
     this.soundMain = ""
-    this.musicPaused = "true"
     this.timerPaused = "true"
 
     this.text = ""
+    this.font = ""
 
     this.state = {
       vers: ["Commencez à marcher !"],
@@ -45,15 +61,22 @@ class Texte extends React.Component{
       weatherDescription: "",
       temperature: 0,
       gyroscope: 0,
-      temps:"",
+      moment:"",
       coefPolice: 1,
       coefTextSpeed: 5,
       nbLines: 4
     }
 
-    Sound.setCategory('Playback')
-    this.soundMain = new Sound()
-    this.soundMain.setNumberOfLoops(-1)
+    // Il faut précharger un son pour que ça foncitonne bien
+    this.soundMain = new Sound(require("../Musics/easter_egg.mp3"),
+      (error, sound) => {
+        if (error) {
+          alert(error.message);
+          return;
+        }else{
+        }
+      })
+    this.soundMain.setNumberOfLoops(-1) // Lance une boucle infinie sur le son
 
     setUpdateIntervalForType(SensorTypes.gyroscope, 500)
     this.detectionIntervalMillis = 1000
@@ -63,10 +86,11 @@ class Texte extends React.Component{
       this.setState({ gyroscope: (abs(x) + abs(y) + abs(z)) * 10 })
     })
 
+    // Récupère une première fois la localisation...
     this.watchGeolocation = Geolocation.getCurrentPosition(position => {
       this._getLocationInfo(position)
     })
-
+    // ... puis surveille le changement sur la position
     this.watchGeolocation = Geolocation.watchPosition(position => {
       this._getLocationInfo(position)
     }, error => console.log("erreur chargement loc : ", error), { distanceFilter: 500, maximumAge: 10000 })
@@ -83,30 +107,25 @@ class Texte extends React.Component{
           case "TILTING":
             this.setState({ coefPolice: 1, nbLines: 4 })
             this._startTimer()
-            this._stopMusic()
             break
           case "WALKING":
           case "ON_FOOT":
             this.setState({ coefTextSpeed: 5, coefPolice: 2, nbLines: 3 })
             this._startTimer()
-            this._startMusic()
             break
           case "RUNNING":
             this.setState({ coefTextSpeed: 3, coefPolice: 3, nbLines: 2 })
             this._startTimer()
-            this._startMusic()
             break
           case "CYCLING":
           case "ON_BICYCLE":
             this.setState({ coefTextSpeed: 1, coefPolice: 4, nbLines: 1 })
             this._startTimer()
-            this._startMusic()
             break
           case "AUTOMOTIVE":
           case "IN_VEHICLE":
-          console.log("VROOM VROOM CAR GOES BRRR")
+          console.log("CAR GOES VROOM VROOM")
           this._startTimer()
-          this._startMusic()
             break
           default:
             console.log("activity recognition error")
@@ -122,10 +141,12 @@ class Texte extends React.Component{
 
 
   componentDidMount() {
-    this._startTimer()
+    this._getDateAndTime()
+    this._setText()
+    this._setFont()
     this._chooseSound()
-    this._startMusic()
     ActivityRecognition.start(this.detectionIntervalMillis)
+    this._startTimer()
   }
 
   _interpret(sentence){
@@ -136,6 +157,39 @@ class Texte extends React.Component{
     //return sentence
   }
 
+  _chooseSound(){
+    // Il faut rajouter les sons du soir et de la nuit quand disponibles.
+    var random = Math.floor((Math.random() * 3))
+    var url = ""
+    console.log(this.state.moment)
+    switch (this.state.moment) {
+      case "matin":{
+        url = audioFiles.matin.[random]
+        break}
+      case "midi":{
+          url = audioFiles.midi.[random]
+        break}
+      case "soir":{
+          url = audioFiles.matin.[random]
+        break}
+      case "nuit":{
+          url = audioFiles.matin.[random]
+        break}
+      default:{
+        url = require("../Musics/easter_egg.mp3")
+        break}
+    }
+    this.soundMain = new Sound(url ,
+    (error, sound) => {
+      if (error) {
+        alert(error.message)
+        return
+      }else{
+        this._startMusic()
+      }
+    })
+  }
+
 
 
   /* =========================================================================*/
@@ -144,111 +198,17 @@ class Texte extends React.Component{
 
 
 
-  _chooseSound(random, temps){
-    // Il faudrait trouver un moyen de changer cette fontionc en réussisant à concaténer
-    // des variables et du texte dans la fonction require(), je n'ai pas réussi.
-    // Il faut aussi rajouter les sons du soir et de la nuit quand disponibles.
-    switch (temps) {
-      case "matin":{
-        switch (random) {
-          case 1:{
-            return require("../Musics/1_matin_Mus.mp3")
-            break}
-          case 2:{
-            return require("../Musics/2_matin_Mus.mp3")
-            break}
-          case 3:{
-            return require("../Musics/3_matin_Mus.mp3")
-            break}
-          default:{
-            return require("../Musics/easter_egg.mp3")
-            break}
-        }
-        break}
-      case "midi":{
-        switch (random) {
-          case 1:{
-            return require("../Musics/1_midi_Mus.mp3")
-            break}
-          case 2:{
-            return require("../Musics/2_midi_Mus.mp3")
-            break}
-          case 3:{
-            return require("../Musics/3_midi_Mus.mp3")
-            break}
-          default:{
-            return require("../Musics/easter_egg.mp3")
-            break}
-        }
-        break}
-      case "soir":{
-        switch (random) {
-          case 1:{
-            return require("../Musics/1_matin_Mus.mp3")
-            break}
-          case 2:{
-            return require("../Musics/2_matin_Mus.mp3")
-            break}
-          case 3:{
-            return require("../Musics/3_matin_Mus.mp3")
-            break}
-          default:{
-            return require("../Musics/easter_egg.mp3")
-            break}
-          }
-        break}
-      case "nuit":{
-        switch (random) {
-          case 1:{
-            return require("../Musics/1_matin_Mus.mp3")
-            break}
-          case 2:{
-            return require("../Musics/2_matin_Mus.mp3")
-            break}
-          case 3:{
-            return require("../Musics/3_matin_Mus.mp3")
-            break}
-          default:{
-            return require("../Musics/easter_egg.mp3")
-            break}
-          }
-        break}
-      default:{
-        return require("../Musics/easter_egg.mp3")
-        break}
-    }
-  }
-
   _startMusic(){
-    if (this.soundMain._duration == -1) {
-      console.log("gnnnn")
-      var random = Math.floor((Math.random() * 3) + 1)
-      console.log(random)
-      this.soundMain = new Sound(this._chooseSound(random, this.state.temps),
-      (error, sound) => {
-        if (error) {
-          alert(error.message);
-          return;
-        }
-      })
-    }
-
-    if (this.musicPaused == "true") {
-      this.musicPaused = "false"
-
-      this.soundMain.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-          this.soundMain.release()
-        } else {
-          console.log('playback failed due to audio decoding errors')
-        }
-      })
-    }
+    this.soundMain.play((success) => {
+      if (success) {
+        console.log('successfully finished playing')
+      } else {
+        console.log('playback failed due to audio decoding errors')
+      }
+    })
   }
 
   _startTimer(){
-    this._getDateAndTime()
     if (this.timerPaused == "true") {
       this.timerPaused = "false"
 
@@ -264,11 +224,6 @@ class Texte extends React.Component{
         }
       }, this.state.coefTextSpeed * 1000)
     }
-  }
-
-  _stopMusic(){
-    this.soundMain.pause()
-    this.musicPaused = "true"
   }
 
   _stopTimer(){
@@ -295,57 +250,45 @@ class Texte extends React.Component{
     else if (mois>=9 && mois<12) this.saison="automne"
     else this.saison="hiver"
 
-    var temps
+    var moment
 
     switch(this.saison) {
       case "printemps": {
-        if (heure<=6 && heure>20) temps="nuit" // possible faire un switch ?
-        else if (heure>6 && heure<=10) temps="matin"
-        else if (heure>10 && heure<=17) temps="midi" // réequilibrer les horaires si besoin pour avoir meilleure repartition entre les 4 textes
-        else temps="soir"
+        if (heure<=6 && heure>20) moment="nuit" // possible faire un switch ?
+        else if (heure>6 && heure<=10) moment="matin"
+        else if (heure>10 && heure<=17) moment="midi" // réequilibrer les horaires si besoin pour avoir meilleure repartition entre les 4 textes
+        else moment="soir"
         break}
 
       case "été":{
-        if (heure<=5 && heure>22) temps="nuit"
-        else if (heure>5 && heure<=10) temps="matin"
-        else if (heure>10 && heure<=18) temps="midi"
-        else temps="soir"
+        if (heure<=5 && heure>22) moment="nuit"
+        else if (heure>5 && heure<=10) moment="matin"
+        else if (heure>10 && heure<=18) moment="midi"
+        else moment="soir"
         break}
 
       case "automne":{
-        if (heure<=6 && heure>20) temps="nuit"
-        else if (heure>6 && heure<=10) temps="matin"
-        else if (heure>10 && heure<=17) temps="midi"
-        else temps="soir"
+        if (heure<=6 && heure>20) moment="nuit"
+        else if (heure>6 && heure<=10) moment="matin"
+        else if (heure>10 && heure<=17) moment="midi"
+        else moment="soir"
         break}
 
       case "hiver":{
-        if (heure<=7 && heure>19) temps="nuit"
-        else if (heure>7 && heure<=10) temps="matin"
-        else if (heure>10 && heure<=17) temps="midi"
-        else temps="soir"
+        if (heure<=7 && heure>19) moment="nuit"
+        else if (heure>7 && heure<=10) moment="matin"
+        else if (heure>10 && heure<=17) moment="midi"
+        else moment="soir"
         break}
 
       default:{
-        if (heure<=5 && heure>21) temps="nuit"
-        else if (heure>5 && heure<=10) temps="matin"
-        else if (heure>10 && heure<=18) temps="midi"
-        else temps="soir"
+        if (heure<=5 && heure>21) moment="nuit"
+        else if (heure>5 && heure<=10) moment="matin"
+        else if (heure>10 && heure<=18) moment="midi"
+        else moment="soir"
         break}
     }
-    this.state.temps = temps
-
-    switch(this.state.temps){
-      case "matin":this.text=TexteMatin
-        break
-      case "midi":this.text=TexteMatin
-        break
-      case "soir":this.text=TexteMatin
-        break
-      case "nuit":this.text="test"
-        break
-      default:console.log("le temps de la journée ne peut être déterminé")
-    }
+    this.state.moment = moment
   }
 
   _getLocationInfo(position){
@@ -368,6 +311,41 @@ class Texte extends React.Component{
     })
   }
 
+
+
+  /* =========================================================================*/
+  /*                            SET TEXT AND FONTS                            */
+  /* =========================================================================*/
+
+
+
+  _setText(){
+    switch(this.state.moment){
+      case "matin":this.text=TexteMatin
+        break
+      case "midi":this.text=TexteMidi
+        break
+      case "soir":this.text="test"
+        break
+      case "nuit":this.text="test"
+        break
+      default:console.log("le temps de la journée ne peut être déterminé")
+    }
+  }
+
+  _setFont(){
+    switch(this.state.moment){
+      case "matin":this.font=fonts.matin
+        break
+      case "midi":this.font=fonts.midi
+        break
+      case "soir":this.font=fonts.soir
+        break
+      case "nuit":this.font=fonts.nuit
+        break
+      default:console.log("le temps de la journée ne peut être déterminé")
+    }
+  }
 
 
   /* =========================================================================*/
@@ -417,7 +395,7 @@ class Texte extends React.Component{
     return (
       <View>
         <Text style={styles.textCaptors}> Saison : {this.saison}  </Text>
-        <Text style={styles.textCaptors}> Temps : {this.state.temps}  </Text>
+        <Text style={styles.textCaptors}> Moment : {this.state.moment}  </Text>
       </View>
     )
   }
@@ -430,7 +408,7 @@ class Texte extends React.Component{
   componentWillUnmount() {
     this.watchGyroscope.unsubscribe()
     ActivityRecognition.stop()
-    this._stopMusic()
+    this.soundMain.release()
   }
 
   render(){
@@ -448,13 +426,8 @@ class Texte extends React.Component{
           {this._displayGeolocation()}
           {this._displayWeather()}
         </View>
-        <View style={styles.buttonContainer}>
-          <Button title="STOP" onPress={() => {this._stopTimer(); this._stopMusic()}}/>
-          <Button title="START" onPress={() => {this._startTimer(); this._startMusic()}}/>
-        </View>
       </View>
     )
-    //Les boutons START et STOP peuvent être retirés à l'avenir, ils m'étaient juste utiles pour tester.
   }
 }
 
@@ -471,11 +444,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center'
   },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
   textOver: {
     fontSize: 40,
     textAlign: 'center',
@@ -486,7 +454,7 @@ const styles = StyleSheet.create({
   containerCaptors: {
     flex: 1,
     position: 'absolute',
-    bottom: '15%'
+    bottom: '10%'
   },
   textCaptors: {
     fontSize: 12,
