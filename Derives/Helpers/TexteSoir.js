@@ -25,7 +25,7 @@ export default derive_soir = [
   "Tu prends",
   "bruissant",
   "dans les bruits",
-  "de tout ce qui s’acharne,"
+  "de tout ce qui s’acharne,",
   "gyrophares et grues",
   "de tout ce qui s’est dressé",
   "avec nous",

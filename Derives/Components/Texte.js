@@ -14,6 +14,8 @@ import { getWeatherWithCity, getWeatherWitLatLon } from '../API/WeatherAPI'
 import Base_de_mots from '../Helpers/WordBase'
 import TexteMatin from '../Helpers/TexteMatin'
 import TexteMidi from '../Helpers/TexteMidi'
+import TexteSoir from '../Helpers/TexteSoir'
+import TexteNuit from '../Helpers/TexteNuit'
 import Camera from './Camera'
 
 const audioFiles = {
@@ -104,7 +106,7 @@ class Texte extends React.Component{
           case "STILL":
           case "STATIONARY":
           case "TILTING":
-            this.setState({ speed : "stationnary" })
+            this.setState({ speed : "stationary" })
             this.setState({ coefPolice: 1, nbLines: 4 })
             this._startTimer()
             break
@@ -128,7 +130,7 @@ class Texte extends React.Component{
           case "AUTOMOTIVE":
           case "IN_VEHICLE":
             this.setState({ speed : "in_vehicle" })
-            console.log("CAR GOES VROOM VROOM")
+            this.setState({ coefTextSpeed: 1, coefPolice: 4, nbLines: 1 })
             this._startTimer()
             break
           default:
@@ -185,7 +187,7 @@ class Texte extends React.Component{
             if (this.state.milieu == "urbain") sentence_new += tab.urbain[Math.floor((Math.random() * tab.urbain.length))]
             break
           case "V":
-            if (this.state.speed == "stationnary") sentence_new += tab.stationnary[Math.floor((Math.random() * tab.stationnary.length))]
+            if (this.state.speed == "stationary") sentence_new += tab.stationary[Math.floor((Math.random() * tab.stationary.length))]
             if (this.state.speed == "walking") sentence_new += tab.walking[Math.floor((Math.random() * tab.walking.length))]
             if (this.state.speed == "running") sentence_new += tab.running[Math.floor((Math.random() * tab.running.length))]
             if (this.state.speed == "cycling") sentence_new += tab.cycling[Math.floor((Math.random() * tab.cycling.length))]
@@ -210,7 +212,6 @@ class Texte extends React.Component{
         sentence_new += sentence.charAt(i)
       }
     }
-    console.log(sentence_new)
     return sentence_new
   }
 
@@ -274,8 +275,10 @@ class Texte extends React.Component{
         } else {
           this.setState({vers: ""})
           for (var i = 0; i < this.state.nbLines; i++) {
-            this.setState({vers: this.state.vers+"\n"+this._interpret(this.text[this.index])})
-            this.index++
+            if (this.index < this.text.length) {
+              this.setState({vers: this.state.vers+"\n"+this._interpret(this.text[this.index])})
+              this.index++
+            }
           }
         }
       }, this.state.coefTextSpeed * 1000)
@@ -386,13 +389,13 @@ class Texte extends React.Component{
 
   _setText(){
     switch(this.state.moment){
-      case "matin":this.text=TexteMatin
+      case "matin":this.text=TexteMidi
         break
-      case "midi":this.text=TexteMatin
+      case "midi":this.text=TexteMidi
         break
-      case "soir":this.text=TexteMatin
+      case "soir":this.text=TexteMidi
         break
-      case "nuit":this.text=TexteMatin
+      case "nuit":this.text=TexteMidi
         break
       default:console.log("le temps de la journée ne peut être déterminé")
     }
