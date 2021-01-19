@@ -8,7 +8,7 @@ export default derive_matin = [
     "Partout",
     "l’air $V00A",
     "dans tes pas",
-    "$N00G $V00A",
+    "L$N00G $V00A",
     "pousse en deux",
     "en mille",
     "et plante",

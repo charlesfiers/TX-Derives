@@ -336,7 +336,7 @@ class Texte extends React.Component{
       case "hiver":{
         if (heure<=7 && heure>19) moment="nuit"
         else if (heure>7 && heure<=10) moment="matin"
-        else if (heure>10 && heure<=17) moment="midi"
+        else if (heure>10 && heure<=15) moment="midi"
         else moment="soir"
         break}
 
@@ -389,13 +389,13 @@ class Texte extends React.Component{
 
   _setText(){
     switch(this.state.moment){
-      case "matin":this.text=TexteMidi
+      case "matin":this.text=TexteMatin
         break
-      case "midi":this.text=TexteMidi
+      case "midi":this.text=TexteSoir
         break
-      case "soir":this.text=TexteMidi
+      case "soir":this.text=TexteSoir
         break
-      case "nuit":this.text=TexteMidi
+      case "nuit":this.text=TexteSoir
         break
       default:console.log("le temps de la journée ne peut être déterminé")
     }

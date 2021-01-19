@@ -6,7 +6,7 @@ A : aléatoire | G : GPS | V : vitesse : | T : température | S :saison
 
 export default derive_midi = [
     "Autre moment,",
-    "$N00G mal fermée",
+    "l$N00G mal fermée",
     "$V16A ses $N01A",
     "comme des odeurs",
     "de pain,",
