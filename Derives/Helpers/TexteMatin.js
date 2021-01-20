@@ -1,6 +1,6 @@
 /*
             SIGNIFICATION SIGLES
-V : verbe | G : groupe de mots | N : nom | A : adverbes
+V : verbe | G : groupe de mots | N : nom | A : adverbes/adjectifs
 A : aléatoire | G : GPS | V : vitesse : | T : température | S :saison
 */
 

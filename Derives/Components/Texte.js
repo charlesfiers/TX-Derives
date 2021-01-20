@@ -212,6 +212,11 @@ class Texte extends React.Component{
         sentence_new += sentence.charAt(i)
       }
     }
+    for (var i = 0; i < sentence_new.length; i++) {
+      if (sentence_new.charAt(i) == "$") {
+        sentence_new = this._interpret(sentence_new) //Permet de faire 2 niveaux d'interprétation
+      }
+    }
     return sentence_new
   }
 
@@ -391,11 +396,11 @@ class Texte extends React.Component{
     switch(this.state.moment){
       case "matin":this.text=TexteMatin
         break
-      case "midi":this.text=TexteSoir
+      case "midi":this.text=TexteNuit
         break
-      case "soir":this.text=TexteSoir
+      case "soir":this.text=TexteNuit
         break
-      case "nuit":this.text=TexteSoir
+      case "nuit":this.text=TexteNuit
         break
       default:console.log("le temps de la journée ne peut être déterminé")
     }

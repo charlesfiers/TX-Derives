@@ -7,7 +7,7 @@ export default base_de_mots = {
     {stationary : ["flâneur"], walking : ["battant"], running : ["chahutant"], cycling : ["dévalant"], in_vehicle : ["floutant"]},
     {stationary : ["crépite"], walking : ["remue", "bouge"], running : ["s'ébroue"], cycling : ["défile"], in_vehicle : ["disparaît"]},
     ["croît", "s'entête", "persiste"],
-    ["tiédissent", "sourient", "valsent"],
+    ["tiédissent", "sourient", "valsent", "enflent", "s'éclairent", "frémissent"],
     {stationary : ["monte"], walking : ["grimpe", "te rencontre"], running : ["se soulève", "t'affleure"], cycling : ["te fouette"], in_vehicle : ["te transperce"]},
     ["s'enfonce", "résonne", "exulte"],
     {stationary : ["es immobile"], walking : ["marches", "avances"], running : ["cours", "t'élances"], cycling : ["roules"], in_vehicle : ["fuses"]},
@@ -32,6 +32,13 @@ export default base_de_mots = {
     ["raconte", "emporte", "cultive", "rejoue"],
     {stationary : ["frayes"], walking : ["prolonges"], running : ["aventures"], cycling : ["fuses"], in_vehicle : ["roules"]},
     ["amorce", "ouvre", "lève"],
+    ["tapisse", "costume", "déguise", "trouble", "éparpille"], //30
+    ["'approche", "e déchausse"],
+    {stationary : ["tangues"], walking : ["tangues"], running : ["persistes"], cycling : ["persistes"], in_vehicle : ["cavales"]},
+    ["fermer", "clore", "fuir"],
+    ["bougent", "résonnent"],
+    ["bâtis", "dressés"],
+    ["tentés", "recommencés", "bravés"],
 
   ],
   N : [
@@ -55,7 +62,7 @@ export default base_de_mots = {
     {stationary : ["L'errance"], walking : ["Le souvenir"], running : ["La guerre"], cycling : ["La course"], in_vehicle : ["Le voyage"]},
     ["taille", "mesure", "hauteur"],
     ["de pays", "du midi"],
-    ["mondes", "temps"], //20
+    ["mondes", "temps", "matins", "rêves"], //20
     ["statues", "murs", "portes", "marelles"],
     ["Les yeux", "Le corps"],
     ["avenue", "ligne de fuite", "contre-allée"],
@@ -63,6 +70,13 @@ export default base_de_mots = {
     ["gyrophares", "coeurs", "néons", "odeurs", "clochers"],
     ["'insolence", "'aplomb", "a vaillance", "a joie"],
     ["torches", "proues", "métamorphoses"],
+    ["herbes", "ornières", "heures"],
+    ["chemins", "ébauches"],
+    [" oeil", "te bouche", "te paume"], //30
+    ["royaumes", "soleils", "terres"],
+    ["le sel", "les traces", "la sciure"],
+    ["bois", "lisières"],
+    {rural : ["labour"], urbain : ["la ville"]},
 
   ],
   G : [
@@ -74,11 +88,26 @@ export default base_de_mots = {
     ["aux pieds", "au seuil"],
     {printemps : ["sous les bourgeons"], automne : ["sous les feuilles mortes"], hiver : ["sous le gel"], été : ["sous le soleil"]},
     ["Tes âges ont", "Tes pas ont", "Dans"],
+    ["pleine de forêt", "gorgée d'eau", "gonflée d'air"],
+    ["tous les boisements", "tous les carrefours", "toutes les lumières"],
+    ["'oeil\n$A07A\nde $G09A\nde la nuit\nun oeil impossible à $V33A\nqui te regarde\nles cils ", "a bouche\n$A07A\nde $G09A\nde la nuit\nune bouche impossible à $V33A\nqui t'avale\nla langue ", "a paume\n$A07A\nde $G09A\nde la nuit\nune paume impossible à $V33A\nqui t'enserre\nles doigts "], //10
+    {stationary : ["La nuit te rattrape"], walking : ["Tu rattrapes la nuit"], running : ["Tu cours après la nuit"], cycling : ["Tu fuis la nuit"], in_vehicle : ["Tu roules dans la nuit"]},
+    {stationary : ["Elle te happe"], walking : ["Elle te happe"], running : ["Tu entres"], cycling : ["Tu entres"], in_vehicle : ["Tu voyages"]},
+    ["oeil\nqui voit", "bouche\nqui chante", "paume\nqui retient"],
+    {stationary : ["Elle te dénude"], walking : ["Elle te dénude"], running : ["Tu la fouilles"], cycling : ["Tu la fouilles"], in_vehicle : ["Tu la parcours"]},
+    ["'oeil de la nuit\nau plus loin de toi,\nl'oeil", "a bouche de la nuit\nau plus loin de toi,\nla bouche", "a paume de la nuit\nau plus loin de toi,\nla paume"],
   ],
   A : [
     ["rousseur", "clameur"],
     ["plein", "ébahi", "au bord"],
     {stationary : ["très lentement"], walking : ["lentement"], running : ["soudainement"], cycling : ["brusquement"], in_vehicle : ["succintement"]},
     {stationary : ["silencieusement"], walking : ["bruissant"], running : ["rugissant"], cycling : ["détalant"], in_vehicle : ["vrombissant"]},
+    ["par-dessus", "couvrant", "couchant"],
+    ["Irrévocable", "Océanique", "Battante"],
+    ["Ici", "Au milieu"],
+    ["énorme", "large", "lourd"],
+    {cold : ["humide"], sweet : ["épais"], hot : ["brûlant"]},
+    ["en face", "là", "debout"],
+    //10
   ],
 }
