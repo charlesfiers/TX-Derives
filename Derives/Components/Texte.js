@@ -396,9 +396,9 @@ class Texte extends React.Component{
     switch(this.state.moment){
       case "matin":this.text=TexteMatin
         break
-      case "midi":this.text=TexteNuit
+      case "midi":this.text=TexteMidi
         break
-      case "soir":this.text=TexteNuit
+      case "soir":this.text=TexteSoir
         break
       case "nuit":this.text=TexteNuit
         break
@@ -406,19 +406,21 @@ class Texte extends React.Component{
     }
   }
 
-  _setFont(){
-    switch(this.state.moment){
-      case "matin":this.font=fonts.matin
-        break
-      case "midi":this.font=fonts.midi
-        break
-      case "soir":this.font=fonts.soir
-        break
-      case "nuit":this.font=fonts.nuit
-        break
-      default:console.log("le temps de la journée ne peut être déterminé")
-    }
-  }
+
+  // A FAIRE (changement de la police en fontion de l'heure)
+  // _setFont(){
+  //   switch(this.state.moment){
+  //     case "matin":this.font=fonts.matin
+  //       break
+  //     case "midi":this.font=fonts.midi
+  //       break
+  //     case "soir":this.font=fonts.soir
+  //       break
+  //     case "nuit":this.font=fonts.nuit
+  //       break
+  //     default:console.log("le temps de la journée ne peut être déterminé")
+  //   }
+  // }
 
 
   /* =========================================================================*/

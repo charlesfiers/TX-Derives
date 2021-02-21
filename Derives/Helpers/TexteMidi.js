@@ -15,7 +15,7 @@ export default derive_midi = [
     "\n",
     "De $N15V en $N15V",
     "Tout ce qui $V03V au bord de toi",
-    "Tout ce qui te $V06V",
+    "Tout ce qui $V06V",
     "\n",
     "Le jour $V09V,",
     "$V10A tes traces",
