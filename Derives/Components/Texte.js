@@ -14,6 +14,8 @@ import { getWeatherWithCity, getWeatherWitLatLon } from '../API/WeatherAPI'
 import Base_de_mots from '../Helpers/WordBase'
 import TexteMatin from '../Helpers/TexteMatin'
 import TexteMidi from '../Helpers/TexteMidi'
+import TexteSoir from '../Helpers/TexteSoir'
+import TexteNuit from '../Helpers/TexteNuit'
 import Camera from './Camera'
 
 const audioFiles = {
@@ -42,6 +44,7 @@ class Texte extends React.Component{
 
     this.date = ""
     this.saison = ""
+    this.heat = ""
 
     this.timer = ""
     this.index = 0
@@ -71,8 +74,8 @@ class Texte extends React.Component{
     this.soundMain = new Sound(require("../Musics/easter_egg.mp3"),
       (error, sound) => {
         if (error) {
-          alert(error.message);
-          return;
+          alert(error.message)
+          return
         }else{
         }
       })
@@ -99,33 +102,36 @@ class Texte extends React.Component{
       const mostProbableActivity = detectedActivities.sorted[0].type
       const activityConfidence = detectedActivities.sorted[0].confidence
       if (mostProbableActivity != this.state.speed && mostProbableActivity != "UNKNOWN" && activityConfidence > 0/* Attention la confidence est en pourcentage sur android et sur ios c'est une note sur 3 */) {
-        this.setState({ speed : mostProbableActivity })
-        this._displayText()
         switch (mostProbableActivity) {
           case "STILL":
           case "STATIONARY":
           case "TILTING":
+            this.setState({ speed : "stationary" })
             this.setState({ coefPolice: 1, nbLines: 4 })
             this._startTimer()
             break
           case "WALKING":
           case "ON_FOOT":
+            this.setState({ speed : "walking" })
             this.setState({ coefTextSpeed: 5, coefPolice: 2, nbLines: 3 })
             this._startTimer()
             break
           case "RUNNING":
+          this.setState({ speed : "running" })
             this.setState({ coefTextSpeed: 3, coefPolice: 3, nbLines: 2 })
             this._startTimer()
             break
           case "CYCLING":
           case "ON_BICYCLE":
+            this.setState({ speed : "cycling" })
             this.setState({ coefTextSpeed: 1, coefPolice: 4, nbLines: 1 })
             this._startTimer()
             break
           case "AUTOMOTIVE":
           case "IN_VEHICLE":
-          console.log("CAR GOES VROOM VROOM")
-          this._startTimer()
+            this.setState({ speed : "in_vehicle" })
+            this.setState({ coefTextSpeed: 1, coefPolice: 4, nbLines: 1 })
+            this._startTimer()
             break
           default:
             console.log("activity recognition error")
@@ -149,19 +155,75 @@ class Texte extends React.Component{
     this._startTimer()
   }
 
+// Cette fonction est un peu une honte mais je n'ai pas trouvé d'autre solution pour l'instant
   _interpret(sentence){
-    i=0
-    //while (sentence.charAt(i) != null) {
-
-    //}
-    //return sentence
+    var sentence_new = ""
+    for (var i = 0; i < sentence.length; i++) {
+      if (sentence.charAt(i) == "$") {
+        var index = parseInt(sentence.charAt(i+2) + sentence.charAt(i+3))
+        var tab = ""
+        switch (sentence.charAt(i+1)) {
+          case "A":
+            tab = Base_de_mots.A[index]
+            break
+          case "G":
+            tab = Base_de_mots.G[index]
+            break
+          case "V":
+            tab = Base_de_mots.V[index]
+            break
+          case "N":
+            tab = Base_de_mots.N[index]
+            break
+          default:
+          sentence_new += "ERROR"
+        }
+        switch (sentence.charAt(i+4)) {
+          case "A":
+            sentence_new += tab[Math.floor((Math.random() * tab.length))]
+            break
+          case "G":
+            if (this.state.milieu == "rural") sentence_new += tab.rural[Math.floor((Math.random() * tab.rural.length))]
+            if (this.state.milieu == "urbain") sentence_new += tab.urbain[Math.floor((Math.random() * tab.urbain.length))]
+            break
+          case "V":
+            if (this.state.speed == "stationary") sentence_new += tab.stationary[Math.floor((Math.random() * tab.stationary.length))]
+            if (this.state.speed == "walking") sentence_new += tab.walking[Math.floor((Math.random() * tab.walking.length))]
+            if (this.state.speed == "running") sentence_new += tab.running[Math.floor((Math.random() * tab.running.length))]
+            if (this.state.speed == "cycling") sentence_new += tab.cycling[Math.floor((Math.random() * tab.cycling.length))]
+            if (this.state.speed == "in_vehicle") sentence_new += tab.in_vehicle[Math.floor((Math.random() * tab.in_vehicle.length))]
+            break
+          case "T":
+            if (this.heat == "cold") sentence_new += tab.cold[Math.floor((Math.random() * tab.cold.length))]
+            if (this.heat == "sweet") sentence_new += tab.cold[Math.floor((Math.random() * tab.sweet.length))]
+            if (this.heat == "hot") sentence_new += tab.cold[Math.floor((Math.random() * tab.hot.length))]
+            break
+          case "S":
+            if (this.saison == "printemps") sentence_new += tab.printemps[Math.floor((Math.random() * tab.printemps.length))]
+            if (this.saison == "été") sentence_new += tab.été[Math.floor((Math.random() * tab.été.length))]
+            if (this.saison == "automne") sentence_new += tab.automne[Math.floor((Math.random() * tab.automne.length))]
+            if (this.saison == "hiver") sentence_new += tab.hiver[Math.floor((Math.random() * tab.hiver.length))]
+            break
+          default:
+          sentence_new += "ERROR"
+        }
+        i+=4
+      }else{
+        sentence_new += sentence.charAt(i)
+      }
+    }
+    for (var i = 0; i < sentence_new.length; i++) {
+      if (sentence_new.charAt(i) == "$") {
+        sentence_new = this._interpret(sentence_new) //Permet de faire 2 niveaux d'interprétation
+      }
+    }
+    return sentence_new
   }
 
   _chooseSound(){
     // Il faut rajouter les sons du soir et de la nuit quand disponibles.
     var random = Math.floor((Math.random() * 3))
     var url = ""
-    console.log(this.state.moment)
     switch (this.state.moment) {
       case "matin":{
         url = audioFiles.matin.[random]
@@ -218,8 +280,10 @@ class Texte extends React.Component{
         } else {
           this.setState({vers: ""})
           for (var i = 0; i < this.state.nbLines; i++) {
-            this.setState({vers: this.state.vers+"\n"+this.text[this.index]})
-            this.index++
+            if (this.index < this.text.length) {
+              this.setState({vers: this.state.vers+"\n"+this._interpret(this.text[this.index])})
+              this.index++
+            }
           }
         }
       }, this.state.coefTextSpeed * 1000)
@@ -277,7 +341,7 @@ class Texte extends React.Component{
       case "hiver":{
         if (heure<=7 && heure>19) moment="nuit"
         else if (heure>7 && heure<=10) moment="matin"
-        else if (heure>10 && heure<=17) moment="midi"
+        else if (heure>10 && heure<=15) moment="midi"
         else moment="soir"
         break}
 
@@ -309,6 +373,15 @@ class Texte extends React.Component{
     getWeatherWitLatLon(this.latitude, this.longitude).then(data => {
       this.setState({weatherDescription: data.weather[0].main, temperature: data.main.feels_like})
     })
+    if (this.state.temperature < 12) {
+      this.heat = "cold"
+    } else {
+      if (this.state.temperature > 25) {
+        this.heat = "hot"
+      } else {
+        this.heat = "sweet"
+      }
+    }
   }
 
 
@@ -325,27 +398,29 @@ class Texte extends React.Component{
         break
       case "midi":this.text=TexteMidi
         break
-      case "soir":this.text="test"
+      case "soir":this.text=TexteSoir
         break
-      case "nuit":this.text="test"
+      case "nuit":this.text=TexteNuit
         break
       default:console.log("le temps de la journée ne peut être déterminé")
     }
   }
 
-  _setFont(){
-    switch(this.state.moment){
-      case "matin":this.font=fonts.matin
-        break
-      case "midi":this.font=fonts.midi
-        break
-      case "soir":this.font=fonts.soir
-        break
-      case "nuit":this.font=fonts.nuit
-        break
-      default:console.log("le temps de la journée ne peut être déterminé")
-    }
-  }
+
+  // A FAIRE (changement de la police en fontion de l'heure)
+  // _setFont(){
+  //   switch(this.state.moment){
+  //     case "matin":this.font=fonts.matin
+  //       break
+  //     case "midi":this.font=fonts.midi
+  //       break
+  //     case "soir":this.font=fonts.soir
+  //       break
+  //     case "nuit":this.font=fonts.nuit
+  //       break
+  //     default:console.log("le temps de la journée ne peut être déterminé")
+  //   }
+  // }
 
 
   /* =========================================================================*/
@@ -409,6 +484,7 @@ class Texte extends React.Component{
     this.watchGyroscope.unsubscribe()
     ActivityRecognition.stop()
     this.soundMain.release()
+    this._stopTimer()
   }
 
   render(){
